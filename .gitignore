@@ -36,3 +36,5 @@ AntGame/build-Debug
 AntGame/tags
 AntGame/AntGame/AntGame.mk
 AntGame/AntGame/compile_flags.txt
+boost_1_76_0
+tags
