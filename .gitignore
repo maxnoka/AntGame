@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+AntGame/.codelite
+AntGame/build-Debug
+AntGame/tags
