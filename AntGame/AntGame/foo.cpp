@@ -2,5 +2,5 @@
 #include <iostream>
 
 void foo() {
-    std::cout << "pineapke\r\n";
+    std::cout << "yeetusspageetus\r\n";
 }
