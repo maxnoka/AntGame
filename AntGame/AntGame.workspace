@@ -4,7 +4,7 @@
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Environment/>
-      <Project Name="AntGame" ConfigName="Debug"/>
+      <Project Name="AntGame" ConfigName="MacDebug"/>
     </WorkspaceConfiguration>
     <WorkspaceConfiguration Name="Release" Selected="yes">
       <Environment/>

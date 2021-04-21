@@ -1,9 +1,7 @@
--Id:\MinGW\lib\gcc\mingw32\9.2.0\include\c++
--Id:\MinGW\lib\gcc\mingw32\9.2.0\include\c++\mingw32
--Id:\MinGW\lib\gcc\mingw32\9.2.0\include\c++\backward
--Id:\MinGW\lib\gcc\mingw32\9.2.0\include
--Id:\MinGW\include
--Id:\MinGW\lib\gcc\mingw32\9.2.0\include-fixed
--ID:\git\AntGame\AntGame\AntGame
--target
-i686-pc-windows-gnu
+-I/usr/local/include
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include
+-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include
+-I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks
+-I/Users/MaxNoka/OneDrive/Projects/AntGame/AntGame/AntGame
