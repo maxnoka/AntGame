@@ -3,6 +3,8 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="bar.cpp"/>
+    <File Name="bar.h"/>
     <File Name="foo.cpp"/>
     <File Name="foo.h"/>
     <File Name="main.cpp"/>
