@@ -34,3 +34,5 @@
 AntGame/.codelite
 AntGame/build-Debug
 AntGame/tags
+AntGame/AntGame/AntGame.mk
+AntGame/AntGame/compile_flags.txt

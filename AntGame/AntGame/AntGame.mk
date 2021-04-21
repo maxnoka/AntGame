@@ -6,18 +6,18 @@
 ProjectName            :=AntGame
 ConfigurationName      :=Debug
 WorkspaceConfiguration := $(ConfigurationName)
-WorkspacePath          :=/Users/MaxNoka/OneDrive/Projects/AntGame/AntGame
-ProjectPath            :=/Users/MaxNoka/OneDrive/Projects/AntGame/AntGame/AntGame
+WorkspacePath          :=D:/Ant/AntGame/AntGame
+ProjectPath            :=D:/Ant/AntGame/AntGame/AntGame
 IntermediateDirectory  :=../build-$(ConfigurationName)/AntGame
 OutDir                 :=../build-$(ConfigurationName)/AntGame
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Maximilian Noka
+User                   :=david
 Date                   :=21/04/2021
-CodeLitePath           :="/Users/MaxNoka/Library/Application Support/CodeLite"
-LinkerName             :=/usr/bin/g++
-SharedObjectLinkerName :=/usr/bin/g++ -dynamiclib -fPIC
+CodeLitePath           :=D:/CodeLite
+LinkerName             :=D:/Compiler/bin/g++.exe
+SharedObjectLinkerName :=D:/Compiler/bin/g++.exe -shared -fPIC
 ObjectSuffix           :=.o
 DependSuffix           :=.o.d
 PreprocessSuffix       :=.i
@@ -28,13 +28,15 @@ OutputSwitch           :=-o
 LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
-OutputFile             :=../build-$(ConfigurationName)/bin/$(ProjectName)
+OutputFile             :=..\build-$(ConfigurationName)\bin\$(ProjectName)
 Preprocessors          :=
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :=$(IntermediateDirectory)/ObjectsList.txt
 PCHCompileFlags        :=
+RcCmpOptions           := 
+RcCompilerName         :=D:/Compiler/bin/windres.exe
 LinkOptions            :=  
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
@@ -47,19 +49,19 @@ LibPath                := $(LibraryPathSwitch).
 ## Common variables
 ## AR, CXX, CC, AS, CXXFLAGS and CFLAGS can be overriden using an environment variables
 ##
-AR       := /usr/bin/ar rcu
-CXX      := /usr/bin/g++
-CC       := /usr/bin/gcc
+AR       := D:/Compiler/bin/ar.exe rcu
+CXX      := D:/Compiler/bin/g++.exe
+CC       := D:/Compiler/bin/gcc.exe
 CXXFLAGS :=  -g -O0 -Wall $(Preprocessors)
 CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
 ASFLAGS  := 
-AS       := /usr/bin/as
+AS       := D:/Compiler/bin/as.exe
 
 
 ##
 ## User defined environment variables
 ##
-CodeLiteDir:=/Applications/codelite.app/Contents/SharedSupport/
+CodeLiteDir:=D:\CodeLite
 Objects0=../build-$(ConfigurationName)/AntGame/main.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/AntGame/foo.cpp$(ObjectSuffix) 
 
 
@@ -73,17 +75,17 @@ Objects=$(Objects0)
 all: MakeIntermediateDirs $(OutputFile)
 
 $(OutputFile): ../build-$(ConfigurationName)/AntGame/.d $(Objects) 
-	@mkdir -p "../build-$(ConfigurationName)/AntGame"
+	@if not exist "..\build-$(ConfigurationName)\AntGame" mkdir "..\build-$(ConfigurationName)\AntGame"
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects0)  > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@mkdir -p "../build-$(ConfigurationName)/AntGame"
-	@mkdir -p ""../build-$(ConfigurationName)/bin""
+	@if not exist "..\build-$(ConfigurationName)\AntGame" mkdir "..\build-$(ConfigurationName)\AntGame"
+	@if not exist ""..\build-$(ConfigurationName)\bin"" mkdir ""..\build-$(ConfigurationName)\bin""
 
 ../build-$(ConfigurationName)/AntGame/.d:
-	@mkdir -p "../build-$(ConfigurationName)/AntGame"
+	@if not exist "..\build-$(ConfigurationName)\AntGame" mkdir "..\build-$(ConfigurationName)\AntGame"
 
 PreBuild:
 
@@ -92,7 +94,7 @@ PreBuild:
 ## Objects
 ##
 ../build-$(ConfigurationName)/AntGame/main.cpp$(ObjectSuffix): main.cpp ../build-$(ConfigurationName)/AntGame/main.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/Users/MaxNoka/OneDrive/Projects/AntGame/AntGame/AntGame/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "D:/Ant/AntGame/AntGame/AntGame/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
 ../build-$(ConfigurationName)/AntGame/main.cpp$(DependSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/AntGame/main.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/AntGame/main.cpp$(DependSuffix) -MM main.cpp
 
@@ -100,7 +102,7 @@ PreBuild:
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/AntGame/main.cpp$(PreprocessSuffix) main.cpp
 
 ../build-$(ConfigurationName)/AntGame/foo.cpp$(ObjectSuffix): foo.cpp ../build-$(ConfigurationName)/AntGame/foo.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/Users/MaxNoka/OneDrive/Projects/AntGame/AntGame/AntGame/foo.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/foo.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "D:/Ant/AntGame/AntGame/AntGame/foo.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/foo.cpp$(ObjectSuffix) $(IncludePath)
 ../build-$(ConfigurationName)/AntGame/foo.cpp$(DependSuffix): foo.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/AntGame/foo.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/AntGame/foo.cpp$(DependSuffix) -MM foo.cpp
 
