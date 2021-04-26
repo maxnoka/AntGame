@@ -2,13 +2,18 @@
 
 #include <iostream>
 
-bar::bar()
+Bar::Bar()
 {
     std::cout << "contstructor\n";
 }
 
-bar::~bar()
+Bar::~Bar()
 {
     std::cout << "destructor\n";
+}
+
+void Bar::DoStuff()
+{
+	std::cout << "REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n";
 }
 

@@ -1,11 +1,13 @@
 #ifndef BAR_H
 #define BAR_H
 
-class bar
+class Bar
 {
 public:
-    bar();
-    ~bar();
+    Bar();
+    ~Bar();
+	
+void DoStuff();
 
 };
 
