@@ -19,4 +19,4 @@ jobs:
         sudo apt-get install -y -qq codelite
     - name: Make Codelite
       run: |
-        codelite-make --workspace=${{github.workspace}}\AntGame.workspace --project=AntGame --config=Release --execute
+        codelite-make --workspace=${{github.workspace}}\AntGame.workspace --project=AntGame --config=MacDebug
