@@ -1,3 +1,0 @@
--ID:\Ant\AntGame\AntGame\AntGame
--target
-i686-pc-windows-gnu
