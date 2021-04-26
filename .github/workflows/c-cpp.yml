@@ -15,8 +15,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install libraries
       run: |
-        apt-get update
-        apt-get install -y -qq codelite
+        sudo apt-get update
+        sudo apt-get install -y -qq codelite
     - name: Make Codelite
       run: |
         codelite-make --workspace=${{github.workspace}}\AntGame.workspace --project=AntGame --config=Release --execute
