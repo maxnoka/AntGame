@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="AntGame" Version="11000" InternalType="Console">
   <VirtualDirectory Name="inc">
-    <File Name="foo.h"/>
-    <File Name="bar.h"/>
+    <File Name="Fauna.h"/>
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="Fauna.h"/>
     <File Name="Fauna.cpp"/>
-    <File Name="bar.cpp"/>
-    <File Name="foo.cpp"/>
     <File Name="main.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">

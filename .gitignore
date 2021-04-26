@@ -1,42 +1,10 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-AntGame/.codelite
-AntGame/build-Debug
-AntGame/tags
-AntGame/AntGame/AntGame.mk
-AntGame/AntGame/compile_flags.txt
-boost_1_76_0
+# CodeLite
+*.codelite
+*.mk
+Makefile
+compile_flags.txt
 tags
-AntGame/AntGame/AntGame.mk
-AntGame/AntGame/AntGame.mk
+build-*
+
+# Big files
+boost_1_76_0
