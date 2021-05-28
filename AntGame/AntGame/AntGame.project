@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="AntGame" Version="11000" InternalType="Console">
   <VirtualDirectory Name="inc">
+    <File Name="inc/WorldObject.h"/>
+    <File Name="inc/WorldTree.h"/>
     <File Name="Fauna.h"/>
   </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
+    <File Name="WorldObject.cpp"/>
+    <File Name="WorldTree.cpp"/>
     <File Name="Fauna.cpp"/>
     <File Name="main.cpp"/>
   </VirtualDirectory>
