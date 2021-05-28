@@ -1,4 +1,4 @@
-#include "inc/WorldObject.h"
+#include <antgame/WorldObject.h>
 
 #include <iostream>
 

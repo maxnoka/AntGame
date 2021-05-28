@@ -1,4 +1,4 @@
-#include "inc/WorldTree.h"
+#include <antgame/WorldTree.h>
 
 #include <iostream>
 
