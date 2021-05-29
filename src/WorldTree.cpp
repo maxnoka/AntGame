@@ -18,3 +18,20 @@ void WorldTree::InsertObject(const std::shared_ptr<WorldObject>& pObj) {
 void WorldTree::RemoveObject(const std::shared_ptr<WorldObject>& pObj) {
     m_rtree.remove(pObj);
 }
+
+std::vector<std::shared_ptr<WorldObject>> WorldTree::Get(const QueryPredicate predicate) const {
+    std::vector<std::shared_ptr<WorldObject>> out;
+    m_rtree.query(boost::geometry::index::satisfies(predicate), std::back_inserter(out));
+    return out;
+}
+
+std::vector<std::shared_ptr<WorldObject>> WorldTree::GetAll() const {
+    std::vector<std::shared_ptr<WorldObject>> out(m_rtree.size());
+    m_rtree.query(
+        boost::geometry::index::satisfies(
+           [](const std::shared_ptr<WorldObject>&){ return true; }
+        ),
+        out.begin()
+    );
+    return out;
+};
