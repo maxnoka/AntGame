@@ -13,7 +13,7 @@ class WorldObject {
 public:
     WorldObject(const Point& initialPosition, const std::string& name);
     
-    std::string Print(bool toCout) const;
+    std::string Print(bool toLog) const;
     
     /* For registering the World Object as a Point */
     Point GetPosition() const { return m_position; }

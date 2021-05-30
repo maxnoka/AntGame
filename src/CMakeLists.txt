@@ -22,6 +22,8 @@ target_compile_features(antgame_library PRIVATE cxx_std_17)
 #####################################
 # Dependencies
 #####################################
+target_link_libraries(antgame_library PUBLIC easyloggingpp) 
+
 find_package(Boost 1.5)
 IF (Boost_FOUND)
     message(STATUS "Boost version: ${Boost_VERSION}")

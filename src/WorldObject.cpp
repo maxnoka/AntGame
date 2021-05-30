@@ -1,5 +1,7 @@
 #include <antgame/WorldObject.h>
 
+#include <easyloggingpp/easylogging++.h>
+
 #include <iostream>
 
 WorldObject::WorldObject(const Point& initialPosition, const std::string& name)
@@ -7,12 +9,11 @@ WorldObject::WorldObject(const Point& initialPosition, const std::string& name)
     , m_id(name)
 { }
 
-std::string WorldObject::Print(bool toCout) const {
+std::string WorldObject::Print(bool toLog) const {
     std::stringstream ss;
-    ss << m_id << ": pos:" << boost::geometry::wkt<Point>(m_position) << std::endl;
-    
-    if (toCout) {
-        std::cout << ss.str();
+    ss << m_id << ": pos:" << boost::geometry::wkt<Point>(m_position);
+    if (toLog) {
+        LOG(INFO) << ss.str();
     }
     return ss.str();
 }
