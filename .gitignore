@@ -1,10 +1,2 @@
-# CodeLite
-*.codelite
-*.mk
-Makefile
-compile_flags.txt
-tags
-build-*
-
-# Big files
-boost_1_76_0
+build/
+.vscode

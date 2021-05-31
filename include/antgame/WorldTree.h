@@ -1,6 +1,6 @@
 #pragma once
 
-#include "inc/WorldObject.h"
+#include "WorldObject.h"
 
 #include <boost/geometry.hpp>
 #include <boost/geometry/index/rtree.hpp>

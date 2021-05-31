@@ -1,4 +1,4 @@
-#include "Fauna.h"
+#include <antgame/Fauna.h>
 
 #include <iostream>
 
