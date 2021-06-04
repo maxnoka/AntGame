@@ -1,13 +1,18 @@
-set( HEADER_LIST 
-  "${AntGame_SOURCE_DIR}/include/antgame/Fauna.h"
+set( HEADER_LIST
+  "${AntGame_SOURCE_DIR}/include/antgame/Agent.h"
+  "${AntGame_SOURCE_DIR}/include/antgame/Ant.h"
   "${AntGame_SOURCE_DIR}/include/antgame/WorldObject.h"
   "${AntGame_SOURCE_DIR}/include/antgame/WorldTree.h"
+  "${AntGame_SOURCE_DIR}/include/antgame/World.h"
 )
 
 set( SOURCES_LIST 
-  "${AntGame_SOURCE_DIR}/src/Fauna.cpp"
+  "${AntGame_SOURCE_DIR}/src/Agent.cpp"
+  "${AntGame_SOURCE_DIR}/src/Ant.cpp"
   "${AntGame_SOURCE_DIR}/src/WorldObject.cpp"
   "${AntGame_SOURCE_DIR}/src/WorldTree.cpp"
+  "${AntGame_SOURCE_DIR}/src/World.cpp"
+
 )
 
 add_library(antgame_library ${SOURCES_LIST} ${HEADER_LIST})
