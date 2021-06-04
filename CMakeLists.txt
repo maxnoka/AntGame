@@ -1,5 +1,5 @@
 # Works with 3.11 and tested through 3.20
-cmake_minimum_required(VERSION 3.11...3.20)
+cmake_minimum_required(VERSION 3.14...3.20)
 
 project(
   AntGame
@@ -19,3 +19,14 @@ endif()
 
 add_subdirectory(src)
 add_subdirectory(cli-app)
+
+if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
+   AND BUILD_TESTING)
+
+  option(PACKAGE_TESTS "Build the tests" ON)
+  if(PACKAGE_TESTS)
+      enable_testing()
+      include(GoogleTest)
+      add_subdirectory(tests)
+  endif()
+endif()
