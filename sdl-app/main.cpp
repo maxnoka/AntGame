@@ -1,5 +1,10 @@
+#include "AntGameRenderer.h"
+#include "Camera.h"
+
 #include <antgame/World.h>
 #include <antgame/Ant.h>
+
+#include <iostream>
 
 /*
  * Copyright (c) 2018, 2019 Amine Ben Hassouna <amine.benhassouna@gmail.com>
@@ -89,17 +94,17 @@ int main(int argc, char* argv[])
         }
         else
         {
-            // Declare rect of square
-            SDL_Rect squareRect;
-
-            // Square dimensions: Half of the min(SCREEN_WIDTH, SCREEN_HEIGHT)
-            squareRect.w = MIN(SCREEN_WIDTH, SCREEN_HEIGHT) / 2;
-            squareRect.h = MIN(SCREEN_WIDTH, SCREEN_HEIGHT) / 2;
-
-            // Square position: In the middle of the screen
-            squareRect.x = SCREEN_WIDTH / 2 - squareRect.w / 2;
-            squareRect.y = SCREEN_HEIGHT / 2 - squareRect.h / 2;
-
+            // Create Camera
+            Camera camera(Point(0., 0.), 100, 0., SCREEN_WIDTH, SCREEN_HEIGHT);
+            // Create the world (in less than 7 days)
+            World world;
+            // put some world objects into the world
+            for ( unsigned i = 0 ; i < 10 ; ++i ) {
+                // create a box
+                Point point(i + 0.0f, i + 0.0f);
+                auto newObj = std::make_shared<Ant>(point, std::to_string(i));
+                world.AddObject(std::move(newObj));
+            }
 
             // Event loop exit flag
             bool quit = false;
@@ -111,6 +116,8 @@ int main(int argc, char* argv[])
 
                 // Wait indefinitely for the next available event
                 SDL_WaitEvent(&e);
+                _sleep(10);
+                // world.Update();
 
                 // User requests quit
                 if(e.type == SDL_QUIT)
@@ -124,11 +131,14 @@ int main(int argc, char* argv[])
                 // Clear screen
                 SDL_RenderClear(renderer);
 
-                // Set renderer color red to draw the square
+                // // Set renderer color red to draw the square
                 SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
 
-                // Draw filled square
-                SDL_RenderFillRect(renderer, &squareRect);
+                // // Draw filled square
+                // SDL_RenderFillRect(renderer, &squareRect);
+
+                Render(renderer, world, camera);
+                world.Update();
 
                 // Update screen
                 SDL_RenderPresent(renderer);

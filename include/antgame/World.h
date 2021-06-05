@@ -15,6 +15,8 @@ public:
     void RemoveObject(const std::shared_ptr<WorldObject>& pObj); 
     */
 
+   auto GetObjects(const Box& box) { return std::make_pair(m_worldTree.QueryBox(box), m_worldTree.QEnd()); }
+
    void Update();
 
    void DbgPrint();

@@ -28,6 +28,8 @@ public:
     using QueryPredicate = bool (*)(const std::shared_ptr<WorldObject>&);
 
     auto Query(const QueryPredicate predicate) const { return m_rtree.qbegin(boost::geometry::index::satisfies(predicate)); }
+    auto QueryBox(const Box& box) { return m_rtree.qbegin(boost::geometry::index::intersects(box)); }
+
     auto QAll() const { return Query( [](const std::shared_ptr<WorldObject>&){ return true; } ); }
     auto QEnd() const { return m_rtree.qend(); }
 
