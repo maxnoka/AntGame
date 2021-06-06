@@ -1,5 +1,6 @@
 #include "AntGameRenderer.h"
 #include "Camera.h"
+#include "InputHandler.h"
 
 #include <antgame/World.h>
 #include <antgame/Ant.h>
@@ -96,6 +97,7 @@ int main(int argc, char* argv[])
         {
             // Create Camera
             Camera camera(Point(0., 0.), 100, 0., SCREEN_WIDTH, SCREEN_HEIGHT);
+            InputHandler inputHandler;
             // Create the world (in less than 7 days)
             World world;
             // put some world objects into the world
@@ -114,13 +116,17 @@ int main(int argc, char* argv[])
             {
                 SDL_Event e;
 
+                inputHandler.Keyboard();
+                inputHandler.HandleInput();
+
+
                 // Wait indefinitely for the next available event
-                SDL_WaitEvent(&e);
-                _sleep(10);
+                //SDL_WaitEvent(&e);
+                
                 // world.Update();
 
                 // User requests quit
-                if(e.type == SDL_QUIT)
+                if(inputHandler.get_quit())
                 {
                     quit = true;
                 }
@@ -138,10 +144,16 @@ int main(int argc, char* argv[])
                 // SDL_RenderFillRect(renderer, &squareRect);
 
                 Render(renderer, world, camera);
-                world.Update();
+                if(inputHandler.get_simrun()) {
+                    world.Update();
+                }
+                    
 
                 // Update screen
                 SDL_RenderPresent(renderer);
+
+
+                _sleep(10);
             }
 
             // Destroy renderer
