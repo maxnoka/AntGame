@@ -1,16 +1,15 @@
 #include "InputHandler.h"
 
-#include <SDL.h>
+
+#include <iostream>
 #include <algorithm>
 
-bool isvalidkey(SDL_KeyboardEvent keycode){
-    return keycode.keysym.sym < 122 && keycode.keysym.sym >= 0;
-}
 
 void InputHandler::Keyboard() {
 
+    for (auto& [_, v] : m_keysdown) v = false;
+    
 
-    std::fill(m_KEYSdown.begin(), m_KEYSdown.end(), 0);
 
    // message processing loop
     SDL_Event event;
@@ -25,16 +24,13 @@ void InputHandler::Keyboard() {
             m_quit = true; // set game state to done,(do what you want here)
             break;
         case SDL_KEYDOWN:
-            if (isvalidkey(event.key) && event.key.repeat == 0){
-                m_KEYS_held[event.key.keysym.sym] = true;
-                m_KEYSdown[event.key.keysym.sym] = true;
-
-            }
+            //std::cout << event.key.keysym.sym << std::endl;
+            m_keysheld[event.key.keysym.sym] = true;
+            m_keysdown[event.key.keysym.sym] = true;
             break;
         case SDL_KEYUP:
-            if (isvalidkey(event.key)){
-                m_KEYS_held[event.key.keysym.sym] = false;
-            }
+                m_keysheld[event.key.keysym.sym] = false;
+            
             break;
         default:
             break;
@@ -46,7 +42,11 @@ void InputHandler::Keyboard() {
 
 void InputHandler::HandleInput() {
 
-    if(m_KEYSdown[SDLK_SPACE]) {
+    if(m_keysdown[SDLK_SPACE]) {
+        m_simrun = !m_simrun;
+    }
+
+    if(m_keysdown[SDLK_F2]) {
         m_simrun = !m_simrun;
     }
 }

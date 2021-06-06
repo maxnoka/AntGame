@@ -1,16 +1,24 @@
 #pragma once
 
-#include <vector>
+
+#include <map>
+#include <SDL.h>
 
 class InputHandler {
 public:
 
     InputHandler()
-    : m_KEYS_held(122, false)
-    , m_KEYSdown(122, false)
+    : m_keysheld()
+    , m_keysdown()
     , m_simrun(false)
     , m_quit(false)
-    {}
+    {
+        m_keysheld[SDLK_SPACE] = false;
+        m_keysheld[SDLK_F2] = false;
+
+        m_keysdown = m_keysheld;
+
+    }
 
     void Keyboard();
     void HandleInput();
@@ -22,8 +30,8 @@ public:
     }
 
 private:
-    std::vector<bool> m_KEYS_held;
-    std::vector<bool> m_KEYSdown;
+    std::map<int, bool> m_keysheld;
+    std::map<int, bool> m_keysdown;
     bool m_simrun;
     bool m_quit;
 };
