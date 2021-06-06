@@ -8,6 +8,6 @@ float randfloat(float LO, float HI) {
 }
 
 void Ant::Update() {
-	this->SetPosX(this->GetPosX() + randfloat(-0.1, 0.1));
-	this->SetPosY(this->GetPosY() + randfloat(-0.1, 0.1));
+	this->SetPosX(this->GetPosX() + randfloat(-0.01, 0.01));
+	this->SetPosY(this->GetPosY() + randfloat(-0.01, 0.01));
 }
