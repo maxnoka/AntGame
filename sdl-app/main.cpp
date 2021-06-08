@@ -126,7 +126,7 @@ int main(int argc, char* argv[])
                 // world.Update();
 
                 // User requests quit
-                if(inputHandler.get_quit())
+                if(inputHandler.GetQuite())
                 {
                     quit = true;
                 }
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
                 // SDL_RenderFillRect(renderer, &squareRect);
 
                 Render(renderer, world, camera);
-                if(inputHandler.get_simrun()) {
+                if(inputHandler.GetSimrun()) {
                     world.Update();
                 }
                     

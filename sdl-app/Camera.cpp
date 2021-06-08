@@ -51,9 +51,9 @@ Point Camera::ScreenToWorldTransform(const SDL_FPoint& p) const {
     return ret;
 }
 
-
-Box Camera::GetFrustrum() const {
+void Camera::UpdateFrustrum() {
     auto p1 = ScreenToWorldTransform({0, 0});
     auto p2 = ScreenToWorldTransform({static_cast<float>(m_windowWidth), static_cast<float>(m_windowHeight)});
-    return Box{p1, p2};
+
+    m_frustrum = Box{p1, p2};
 }

@@ -1,5 +1,4 @@
-#ifndef FAUNA_H
-#define FAUNA_H
+#pragma once
 
 #include "Agent.h"
 
@@ -12,6 +11,3 @@ public:
 	
 	void Update() override;
 };
-
-
-#endif // FAUNA_H

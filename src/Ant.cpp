@@ -1,13 +1,13 @@
 #include <antgame/Ant.h>
 #include <stdlib.h>
 
-float randfloat(float LO, float HI) {
-	
-	float r3 = LO + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(HI-LO)));
-	return r3;
+float RandFloat(float lo, float hi) {
+	return lo + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(hi - lo)));
 }
 
 void Ant::Update() {
-	this->SetPosX(this->GetPosX() + randfloat(-0.01, 0.01));
-	this->SetPosY(this->GetPosY() + randfloat(-0.01, 0.01));
+	static constexpr auto driftDelta = 0.01;
+
+	this->SetPosX(this->GetPosX() + RandFloat(-driftDelta, driftDelta));
+	this->SetPosY(this->GetPosY() + RandFloat(-driftDelta, driftDelta));
 }

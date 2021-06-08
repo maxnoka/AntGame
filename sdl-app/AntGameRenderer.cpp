@@ -1,7 +1,5 @@
 #include "AntGameRenderer.h"
 
-#include <SDL.h>
-
 #include <algorithm>
 
 namespace {
@@ -23,7 +21,7 @@ namespace {
     constexpr auto kDefaultSize = 0.5;
 }
 
-void Render(SDL_Renderer* renderer, World world, Camera camera) {
+void Render(SDL_Renderer* renderer, const World& world, const Camera& camera) {
     auto frustrum = camera.GetFrustrum();
 
     auto [objectsIt, objectsItEnd] = world.GetObjects(frustrum);
