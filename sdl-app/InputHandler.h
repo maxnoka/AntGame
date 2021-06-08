@@ -19,7 +19,7 @@ public:
     void Keyboard();
     void HandleInput();
     bool GetSimrun() { return m_simrun; }
-    bool GetQuite() { return m_quit; }
+    bool GetQuit() { return m_quit; }
 
 private:
     std::map<int, bool> m_keysheld;

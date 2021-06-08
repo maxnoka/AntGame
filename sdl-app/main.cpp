@@ -6,6 +6,10 @@
 #include <antgame/Ant.h>
 
 #include <iostream>
+#include <thread>
+#include <chrono>
+
+using namespace std::literals::chrono_literals;
 
 /*
  * Copyright (c) 2018, 2019 Amine Ben Hassouna <amine.benhassouna@gmail.com>
@@ -126,7 +130,7 @@ int main(int argc, char* argv[])
                 // world.Update();
 
                 // User requests quit
-                if(inputHandler.GetQuite())
+                if(inputHandler.GetQuit())
                 {
                     quit = true;
                 }
@@ -152,8 +156,7 @@ int main(int argc, char* argv[])
                 // Update screen
                 SDL_RenderPresent(renderer);
 
-
-                _sleep(10);
+                std::this_thread::sleep_for(10ms);
             }
 
             // Destroy renderer
