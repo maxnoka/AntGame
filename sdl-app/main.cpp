@@ -100,7 +100,7 @@ int main(int argc, char* argv[])
         else
         {
             // Create Camera
-            Camera camera(Point(0., 0.), 100, 0., SCREEN_WIDTH, SCREEN_HEIGHT);
+            Camera camera(Point(0., 0.), 0, 0., SCREEN_WIDTH, SCREEN_HEIGHT);
             InputHandler inputHandler;
             // Create the world (in less than 7 days)
             World world;
@@ -115,6 +115,9 @@ int main(int argc, char* argv[])
             // Event loop exit flag
             bool quit = false;
 
+            int x_move;
+            int y_move;
+
             // Event loop
             while(!quit)
             {
@@ -122,6 +125,12 @@ int main(int argc, char* argv[])
 
                 inputHandler.Keyboard();
                 inputHandler.HandleInput();
+
+                x_move = inputHandler.GetXmove();
+                y_move = inputHandler.GetYmove();
+
+                camera.UpdatePosition(x_move, y_move);
+                camera.UpdateZoom(0.1 * inputHandler.GetZoominc());
 
 
                 // Wait indefinitely for the next available event
@@ -156,7 +165,7 @@ int main(int argc, char* argv[])
                 // Update screen
                 SDL_RenderPresent(renderer);
 
-                std::this_thread::sleep_for(10ms);
+                std::this_thread::sleep_for(16ms);
             }
 
             // Destroy renderer
