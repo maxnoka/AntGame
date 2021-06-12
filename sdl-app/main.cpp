@@ -5,6 +5,9 @@
 #include <antgame/World.h>
 #include <antgame/Ant.h>
 
+#include <easyloggingpp/easylogging++.h>
+#include <SDL.h>
+
 #include <iostream>
 #include <thread>
 #include <chrono>
@@ -41,66 +44,50 @@ using namespace std::literals::chrono_literals;
  *
  */
 
-#include <stdio.h>
-#include <stdbool.h>
-
-#include <SDL.h>
-
-// Define MAX and MIN macros
-#define MAX(X, Y) (((X) > (Y)) ? (X) : (Y))
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))
+INITIALIZE_EASYLOGGINGPP
 
 // Define screen dimensions
-#define SCREEN_WIDTH    800
-#define SCREEN_HEIGHT   600
+constexpr auto kScreenWidth = 800;
+constexpr auto kScreenHeight = 600;
 
-int main(int argc, char* argv[])
-{
-    // Unused argc, argv
-    (void) argc;
-    (void) argv;
-
+int main(int argc, char* argv[]) {
     // Initialize SDL
-    if(SDL_Init(SDL_INIT_VIDEO) < 0)
-    {
-        printf("SDL could not be initialized!\n"
-               "SDL_Error: %s\n", SDL_GetError());
+    if(SDL_Init(SDL_INIT_VIDEO) < 0) {
+        LOG(ERROR) << "SDL could not be initialized!\n"
+            << "SDL_Error: " << SDL_GetError();
         return 0;
     }
 
 #if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
     // Disable compositor bypass
-    if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0"))
-    {
-        printf("SDL can not disable compositor bypass!\n");
+    if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0")) {
+        LOG(ERROR) << "SDL can not disable compositor bypass!";
         return 0;
     }
 #endif
 
     // Create window
-    SDL_Window *window = SDL_CreateWindow("Basic C SDL project",
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          SDL_WINDOWPOS_UNDEFINED,
-                                          SCREEN_WIDTH, SCREEN_HEIGHT,
-                                          SDL_WINDOW_SHOWN);
-    if(!window)
-    {
-        printf("Window could not be created!\n"
-               "SDL_Error: %s\n", SDL_GetError());
+    SDL_Window *window = SDL_CreateWindow(
+        "Basic C SDL project",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        kScreenWidth, kScreenHeight,
+        SDL_WINDOW_SHOWN);
+
+    if(!window) {
+        LOG(ERROR) << "Window could not be created!\n"
+            << "SDL_Error: " << SDL_GetError();
     }
-    else
-    {
+    else {
         // Create renderer
         SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-        if(!renderer)
-        {
-            printf("Renderer could not be created!\n"
-                   "SDL_Error: %s\n", SDL_GetError());
+        if(!renderer) {
+            LOG(ERROR) << "Renderer could not be created!\n"
+                << "SDL_Error: " << SDL_GetError();
         }
-        else
-        {
+        else {
             // Create Camera
-            Camera camera(Point(0., 0.), 0, 0., SCREEN_WIDTH, SCREEN_HEIGHT);
+            Camera camera(Point(0., 0.), 0, 0., kScreenWidth, kScreenHeight);
             InputHandler inputHandler;
             // Create the world (in less than 7 days)
             World world;
@@ -119,8 +106,7 @@ int main(int argc, char* argv[])
             int y_move;
 
             // Event loop
-            while(!quit)
-            {
+            while(!quit) {
                 SDL_Event e;
 
                 inputHandler.Keyboard();
@@ -132,15 +118,13 @@ int main(int argc, char* argv[])
                 camera.UpdatePosition(x_move, y_move);
                 camera.UpdateZoom(0.1 * inputHandler.GetZoominc());
 
-
                 // Wait indefinitely for the next available event
                 //SDL_WaitEvent(&e);
                 
                 // world.Update();
 
                 // User requests quit
-                if(inputHandler.GetQuit())
-                {
+                if(inputHandler.GetQuit()) {
                     quit = true;
                 }
 
@@ -161,7 +145,6 @@ int main(int argc, char* argv[])
                     world.Update();
                 }
                     
-
                 // Update screen
                 SDL_RenderPresent(renderer);
 

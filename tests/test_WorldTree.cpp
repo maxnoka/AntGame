@@ -1,6 +1,9 @@
 #include <antgame/WorldTree.h>
 
+#include <easyloggingpp/easylogging++.h>
 #include <gtest/gtest.h>
+
+INITIALIZE_EASYLOGGINGPP
 
 TEST(WorldTreeTest, Insert) {
     WorldTree wt;

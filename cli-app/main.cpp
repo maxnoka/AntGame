@@ -1,10 +1,13 @@
 #include <antgame/World.h>
 #include <antgame/Ant.h>
 
+#include <easyloggingpp/easylogging++.h>
+
 #include <iostream>
 
-int main(int argc, char **argv)
-{
+INITIALIZE_EASYLOGGINGPP
+
+int main(int argc, char **argv) {
     World world;
     
     // put some world objects into the world
@@ -14,7 +17,7 @@ int main(int argc, char **argv)
         auto newObj = std::make_shared<Ant>(point, std::to_string(i));
         world.AddObject(std::move(newObj));
     }
-        
+
     for (size_t i = 0; i < 10000; i++)
     {
         world.Update();

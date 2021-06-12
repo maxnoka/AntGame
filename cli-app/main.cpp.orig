@@ -1,0 +1,60 @@
+#include <antgame/World.h>
+#include <antgame/Ant.h>
+
+#include <easyloggingpp/easylogging++.h>
+
+#include <iostream>
+
+<<<<<<< HEAD
+int main(int argc, char **argv)
+{
+    World world;
+=======
+INITIALIZE_EASYLOGGINGPP
+
+int main(int argc, char **argv) {
+    START_EASYLOGGINGPP(argc, argv);
+    LOG(INFO) << "Starting CLI-App";
+
+    WorldTree wt;
+>>>>>>> b500724 (Add EasyLogging)
+    
+    // put some world objects into the world
+    for ( unsigned i = 0 ; i < 10 ; ++i ) {
+        // create a box
+        Point point(i + 0.0f, i + 0.0f);
+        auto newObj = std::make_shared<Ant>(point, std::to_string(i));
+        world.AddObject(std::move(newObj));
+    }
+<<<<<<< HEAD
+        
+    for (size_t i = 0; i < 10000; i++)
+    {
+        world.Update();
+    }
+
+    world.DbgPrint();
+=======
+    
+    // do a query
+    LOG(INFO) << "knn query point:";
+    Point point(0, 0);
+    LOG(INFO) << boost::geometry::wkt<Point>(point);
+    
+    auto result = wt.GetNearestNeighbours(point, 2);
+    LOG(INFO) << "knn query result:";
+    for (const auto& v : result) {
+        v->Print(true);
+        wt.RemoveObject(v);
+    }
+    
+    LOG(INFO) << "again";
+    result = wt.GetNearestNeighbours(point, 2);
+    LOG(INFO) << "knn query result:";
+    for (const auto& v : result) {
+        v->Print(true);
+    }
+ 
+>>>>>>> b500724 (Add EasyLogging)
+	return 0;
+}

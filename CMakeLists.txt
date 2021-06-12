@@ -20,6 +20,8 @@ endif()
 # Add SDL2 CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/sdl2)
 
+add_subdirectory(extern/easyloggingpp)
+
 add_subdirectory(src)
 add_subdirectory(cli-app)
 add_subdirectory(sdl-app)
