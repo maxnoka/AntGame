@@ -1,9 +1,50 @@
 #include "Camera.h"
+#include "InputHandler.h"
+#include "Keybindings.h"
+
+#include <easyloggingpp/easylogging++.h>
 
 namespace {
     float Expzoom(float zoom) {
-        return 100.0 * exp(zoom);       
+        static constexpr float kZoomScaling = 100;
+        return kZoomScaling * exp(zoom);       
     }
+
+    constexpr auto kZoomIncrement = 0.1;
+}
+
+Camera::Camera(const Point& initialPosition, int zoom, float rotation, unsigned int windowWidth, unsigned int windowHeight)
+    : IMessageSubscriber()
+    , m_position(initialPosition) 
+    , m_zoom(zoom)
+    , m_rotation(rotation)
+    , m_windowWidth(windowWidth)
+    , m_windowHeight(windowHeight)
+    , m_frustrum()
+{
+    UpdateFrustrum();
+}
+
+void Camera::UpdateZoom(float changeinzoom) {
+    m_zoom = m_zoom + changeinzoom;
+}
+
+void Camera::ZoomIn() {
+    UpdateZoom(kZoomIncrement);
+}
+
+void Camera::ZoomOut() {
+    UpdateZoom(-kZoomIncrement);
+}
+
+void Camera::OnMessage(const KeysDict& keysDown) {
+    using namespace Keybindings::Navigation;
+    ANTGAME_TRY_GET_KEY(keysDown, ZoomIn::kCode, ZoomIn())
+    ANTGAME_TRY_GET_KEY(keysDown, ZoomOut::kCode, ZoomOut())
+    ANTGAME_TRY_GET_KEY(keysDown, Right::kCode, Move(Direction::Right))
+    ANTGAME_TRY_GET_KEY(keysDown, Left::kCode, Move(Direction::Left))
+    ANTGAME_TRY_GET_KEY(keysDown, Up::kCode, Move(Direction::Up))
+    ANTGAME_TRY_GET_KEY(keysDown, Down::kCode, Move(Direction::Down))
 }
 
 SDL_FPoint Camera::WorldToScreenTransform(const Point& point) const {
@@ -59,8 +100,20 @@ void Camera::UpdateFrustrum() {
     m_frustrum = Box{p1, p2};
 }
 
-void Camera::UpdatePosition(int x, int y) {
-    float panspeed = 10;
-    m_position.set<0>( m_position.get<0>() + panspeed * x/Expzoom(m_zoom));
-    m_position.set<1>( m_position.get<1>() + panspeed * y/Expzoom(m_zoom));
+void Camera::Move(const Direction direc) {
+    static constexpr float kPanSpeed = 10;
+    switch(direc) {
+        case Direction::Up:
+            m_position.set<1>( m_position.get<1>() - kPanSpeed / Expzoom(m_zoom));
+            return;
+        case Direction::Down:
+            m_position.set<1>( m_position.get<1>() + kPanSpeed / Expzoom(m_zoom));
+            return;
+        case Direction::Right:
+            m_position.set<0>( m_position.get<0>() + kPanSpeed / Expzoom(m_zoom));
+            return;
+        case Direction::Left:
+            m_position.set<0>( m_position.get<0>() - kPanSpeed / Expzoom(m_zoom));
+            return;
+    }
 }
