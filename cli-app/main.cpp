@@ -5,9 +5,9 @@
 
 #include <iostream>
 
-int main(int argc, char **argv)
-{
 INITIALIZE_EASYLOGGINGPP
+
+int main(int argc, char **argv) {
     World world;
     
     // put some world objects into the world
