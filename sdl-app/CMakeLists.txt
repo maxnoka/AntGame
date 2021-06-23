@@ -1,8 +1,8 @@
 set( SOURCES_LIST 
-  "main.cpp"
   "Camera.cpp"
-  "AntGameRenderer.cpp"
+  "Game.cpp"
   "InputHandler.cpp"
+  "main.cpp"
 )
 
 add_executable(sdl_app ${SOURCES_LIST})
