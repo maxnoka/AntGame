@@ -1,6 +1,9 @@
 set( HEADER_LIST
   "${AntGame_SOURCE_DIR}/include/antgame/Agent.h"
   "${AntGame_SOURCE_DIR}/include/antgame/Ant.h"
+  "${AntGame_SOURCE_DIR}/include/antgame/Plant.h"
+  "${AntGame_SOURCE_DIR}/include/antgame/Visitee.h"
+  "${AntGame_SOURCE_DIR}/include/antgame/Visitor.h"
   "${AntGame_SOURCE_DIR}/include/antgame/WorldObject.h"
   "${AntGame_SOURCE_DIR}/include/antgame/WorldTree.h"
   "${AntGame_SOURCE_DIR}/include/antgame/World.h"
@@ -9,6 +12,7 @@ set( HEADER_LIST
 set( SOURCES_LIST 
   "${AntGame_SOURCE_DIR}/src/Agent.cpp"
   "${AntGame_SOURCE_DIR}/src/Ant.cpp"
+  "${AntGame_SOURCE_DIR}/src/Plant.cpp"
   "${AntGame_SOURCE_DIR}/src/WorldObject.cpp"
   "${AntGame_SOURCE_DIR}/src/WorldTree.cpp"
   "${AntGame_SOURCE_DIR}/src/World.cpp"

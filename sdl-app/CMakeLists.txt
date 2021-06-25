@@ -3,6 +3,7 @@ set( SOURCES_LIST
   "Game.cpp"
   "InputHandler.cpp"
   "main.cpp"
+  "WorldObjectRenderer.cpp"
 )
 
 add_executable(sdl_app ${SOURCES_LIST})

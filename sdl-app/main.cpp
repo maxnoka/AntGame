@@ -93,8 +93,6 @@ int main(int argc, char* argv[]) {
                 // Initialize renderer color white for the background
                 SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 SDL_RenderClear(renderer);
-                // Set renderer color red to draw the square
-                SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
                 antGame.Render(renderer);
                 // Update screen
                 SDL_RenderPresent(renderer);
