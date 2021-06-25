@@ -7,14 +7,17 @@
 
 #include <easyloggingpp/easylogging++.h>
 
-Game::Game(int screenWidth, int screenHeight) 
+Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer) 
     : IMessageSubscriber<KeysDict>()
     , IMessageSubscriber<MiscInput>()
     , m_camera(Point(0., 0.), 0, 0., screenWidth, screenHeight)
     , m_world()
     , m_inputHandler()
     , m_runSim(false)
+    , m_debugMode(false)
     , m_shouldQuit(false)
+    , m_renderer(renderer)
+    , m_worenderer(this)
 { 
     m_inputHandler.SubscribeToKeys(&m_camera);
     m_inputHandler.SubscribeToKeys(this);
@@ -48,6 +51,8 @@ void Game::ToggleRunSim() noexcept {
 void Game::OnMessage(const KeysDict& keysDown) {
     using namespace Keybindings;
     ANTGAME_TRY_GET_KEY(keysDown, Simulation::ToggleSim::kCode, ToggleRunSim())
+    ANTGAME_TRY_GET_KEY(keysDown, Debug::ToggleDebug::kCode, 
+        [this](){this->m_debugMode = !this->m_debugMode; LOG(INFO) << "egg";}())
 }
 
 void Game::OnMessage(const MiscInput& input) { 
@@ -64,12 +69,11 @@ void Game::ProcessInput() {
     m_inputHandler.HandleInput();
 }
 
-void Game::Render(SDL_Renderer* renderer) const {
+void Game::Render() const {
     auto frustrum = m_camera.GetFrustrum();
     auto [objectsIt, objectsItEnd] = m_world.GetObjects(frustrum);
 
-    WorldObjectRenderer woRenderer {renderer, m_camera};
     for (; objectsIt != objectsItEnd; objectsIt++) {
-        (*objectsIt)->Accept(woRenderer);
+        (*objectsIt)->Accept(m_worenderer);
     }
 }

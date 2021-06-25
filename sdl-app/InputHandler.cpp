@@ -26,6 +26,10 @@ InputHandler::InputHandler()
         using namespace Keybindings::Simulation;
         m_keysheld[ToggleSim::kCode] = false;
     }
+    {
+        using namespace Keybindings::Debug;
+        m_keysheld[ToggleDebug::kCode] = false;
+    }
 
     m_keysdown = m_keysheld;
 }

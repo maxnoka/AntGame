@@ -16,4 +16,5 @@ target_link_libraries(sdl_app PRIVATE antgame_library)
 # External Dependencies
 #####################################
 find_package(SDL2 REQUIRED)
-target_link_libraries(sdl_app PRIVATE SDL2::Main)
+find_package(SDL2_ttf REQUIRED)
+target_link_libraries(sdl_app PRIVATE SDL2::Main SDL2::TTF)
