@@ -73,7 +73,6 @@ void InputHandler::DispatchMisc(const MiscInput input) const {
     }
 }
 
-
 void InputHandler::DispatchKeys() const {
     for (auto subscriber : m_keysSubscribers) {
         subscriber->OnMessage(m_keysdown);

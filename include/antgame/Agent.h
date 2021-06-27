@@ -1,6 +1,9 @@
 #pragma once
 
 #include "WorldObject.h"
+#include "Visitee.h"
+
+class WorldTree;
 
 class Agent : public WorldObject {
 public:
@@ -8,5 +11,5 @@ public:
 	: WorldObject(initialPosition, name)
     {}
 
-	virtual void Update() = 0;
+	virtual void Update(const WorldTree& world) = 0;
 };

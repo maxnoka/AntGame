@@ -31,10 +31,12 @@ void Camera::UpdateZoom(float changeinzoom) {
 
 void Camera::ZoomIn() {
     UpdateZoom(kZoomIncrement);
+    UpdateFrustrum();
 }
 
 void Camera::ZoomOut() {
     UpdateZoom(-kZoomIncrement);
+    UpdateFrustrum();
 }
 
 void Camera::OnMessage(const KeysDict& keysDown) {
@@ -89,14 +91,16 @@ Point Camera::ScreenToWorldTransform(const SDL_FPoint& p) const {
     auto d_y = r21*p.x+r22*p.y;
     
     auto z = Expzoom(m_zoom);
-
-    Point ret((d_x + o_x)/z, (d_y + o_y)/z);
-    return ret;
+    return {d_x/z + o_x, d_y/z + o_y};
 }
 
 void Camera::UpdateFrustrum() {
     auto p1 = ScreenToWorldTransform({0, 0});
-    auto p2 = ScreenToWorldTransform({static_cast<float>(m_windowWidth), static_cast<float>(m_windowHeight)});
+
+    auto p2 = ScreenToWorldTransform({
+        static_cast<float>(m_windowWidth),
+        static_cast<float>(m_windowHeight)});
+
     m_frustrum = Box{p1, p2};
 }
 
@@ -105,15 +109,16 @@ void Camera::Move(const Direction direc) {
     switch(direc) {
         case Direction::Up:
             m_position.set<1>( m_position.get<1>() - kPanSpeed / Expzoom(m_zoom));
-            return;
+            break;
         case Direction::Down:
             m_position.set<1>( m_position.get<1>() + kPanSpeed / Expzoom(m_zoom));
-            return;
+            break;
         case Direction::Right:
             m_position.set<0>( m_position.get<0>() + kPanSpeed / Expzoom(m_zoom));
-            return;
+            break;
         case Direction::Left:
             m_position.set<0>( m_position.get<0>() - kPanSpeed / Expzoom(m_zoom));
-            return;
+            break;
     }
+    UpdateFrustrum();
 }

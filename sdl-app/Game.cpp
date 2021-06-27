@@ -1,28 +1,11 @@
 #include "Game.h"
 #include "Keybindings.h"
+#include "WorldObjectRenderer.h"
 
 #include <antgame/Ant.h>
+#include <antgame/Plant.h>
 
 #include <easyloggingpp/easylogging++.h>
-
-namespace {
-    Box ExpandPointToRect(const WorldObject& point, float size) {
-        auto min_x = point.GetPosX() - size / 2;
-        auto min_y = point.GetPosY() - size / 2;
-        auto max_x = point.GetPosX() + size / 2;
-        auto max_y = point.GetPosY() + size / 2;
-        return Box({min_x, min_y}, {max_x, max_y});
-    }
-
-    SDL_FRect BoxToFRectTransform(const Box& box, const Camera& cam) {
-        auto min = cam.WorldToScreenTransform(box.min_corner());
-        auto max = cam.WorldToScreenTransform(box.max_corner());
-
-        return SDL_FRect { min.x, min.y, (max.x - min.x), (max.y - min.y)};
-    }
-
-    constexpr auto kDefaultSize = 0.5;
-}
 
 Game::Game(int screenWidth, int screenHeight) 
     : IMessageSubscriber<KeysDict>()
@@ -37,10 +20,23 @@ Game::Game(int screenWidth, int screenHeight)
     m_inputHandler.SubscribeToKeys(this);
     m_inputHandler.SubscribeToMiscInput(this);
 
-    for ( unsigned int i = 0 ; i < 10 ; ++i ) {
-        // create a box
-        Point point(i + 0.0f, i + 0.0f);
-        auto newObj = std::make_shared<Ant>(point, std::to_string(i));
+    // Add some ants
+    for ( unsigned int i = 0 ; i < 3 ; ++i ) {
+        Point point(2*i + 0.0f, 2*i + 0.0f);
+        auto newObj = std::make_shared<Ant>(point, "Ant_" + std::to_string(i));
+        m_world.AddAgent(std::move(newObj));
+    }
+
+    {
+        Point point(7, 3);
+        auto newObj = std::make_shared<Ant>(point, "Ant_6");
+        m_world.AddAgent(std::move(newObj));
+    }
+
+    // Add some food
+    for ( unsigned int i = 5 ; i < 10 ; ++i ) {
+        Point point(i + 0.0f, 2.0f);
+        auto newObj = std::make_shared<Plant>(point, "Plant_" + std::to_string(i), 5);
         m_world.AddObject(std::move(newObj));
     }
 }
@@ -70,23 +66,10 @@ void Game::ProcessInput() {
 
 void Game::Render(SDL_Renderer* renderer) const {
     auto frustrum = m_camera.GetFrustrum();
-
     auto [objectsIt, objectsItEnd] = m_world.GetObjects(frustrum);
-    std::vector<SDL_FRect> pointsToRender(std::distance(objectsIt, objectsItEnd));
-    auto it = std::inserter(pointsToRender, pointsToRender.begin());
-    std::transform(
-        objectsIt,
-        objectsItEnd,
-        it,
-        [this](const std::shared_ptr<WorldObject>& wobj) {
-            auto rect = ExpandPointToRect(*wobj, kDefaultSize);
-            return BoxToFRectTransform(rect, this->m_camera);
-        } 
-    );
 
-    SDL_RenderDrawRectsF(
-        renderer,
-        pointsToRender.data(),
-        pointsToRender.size()
-    );
+    WorldObjectRenderer woRenderer {renderer, m_camera};
+    for (; objectsIt != objectsItEnd; objectsIt++) {
+        (*objectsIt)->Accept(woRenderer);
+    }
 }
