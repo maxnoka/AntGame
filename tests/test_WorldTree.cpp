@@ -1,4 +1,5 @@
 #include <antgame/WorldTree.h>
+#include <antgame/Ant.h>
 
 #include <easyloggingpp/easylogging++.h>
 #include <gtest/gtest.h>
@@ -7,7 +8,7 @@ INITIALIZE_EASYLOGGINGPP
 
 TEST(WorldTreeTest, Insert) {
     WorldTree wt;
-    auto obj = std::make_shared<WorldObject>(Point(1, 2), "woName");
+    auto obj = std::make_shared<Ant>(Point(1, 2), "woName");
     wt.InsertObject(obj);
 
     size_t numEntries = 0;
