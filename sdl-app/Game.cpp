@@ -44,15 +44,18 @@ Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer)
     }
 }
 
-void Game::ToggleRunSim() noexcept {
-    m_runSim = !m_runSim;
-}
-
 void Game::OnMessage(const KeysDict& keysDown) {
     using namespace Keybindings;
-    ANTGAME_TRY_GET_KEY(keysDown, Simulation::ToggleSim::kCode, ToggleRunSim())
+    ANTGAME_TRY_GET_KEY(keysDown, Simulation::ToggleSim::kCode,
+        [this](){
+            this->m_runSim = !this->m_runSim; 
+            LOG(INFO) << "Sim " << (this->m_runSim ? "started" : "stopped");
+        }())
     ANTGAME_TRY_GET_KEY(keysDown, Debug::ToggleDebug::kCode, 
-        [this](){this->m_debugMode = !this->m_debugMode; LOG(INFO) << "egg";}())
+        [this](){
+            this->m_debugMode = !this->m_debugMode; 
+            LOG(INFO) << "Debug mode " << (this->m_debugMode ? "enabled" : "disabled");
+        }())
 }
 
 void Game::OnMessage(const MiscInput& input) { 

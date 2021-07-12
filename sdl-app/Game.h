@@ -34,5 +34,4 @@ private:
     bool m_runSim;
     bool m_debugMode;
     bool m_shouldQuit;
-    void ToggleRunSim() noexcept;
 };

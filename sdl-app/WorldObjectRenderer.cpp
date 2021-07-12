@@ -44,7 +44,7 @@ void WorldObjectRenderer::Visit(const Plant& visitee) const {
     if(m_game->m_debugMode)
     {
         //this opens a font style and sets a size
-        TTF_Font* Sans = TTF_OpenFont("D:/Ant/AntGame/assets/cour.ttf", 48);
+        TTF_Font* Sans = TTF_OpenFont("../../assets/cour.ttf", 48);
 
         if (!Sans) {
             LOG(ERROR) << "no font lmao";
