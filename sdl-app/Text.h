@@ -9,7 +9,7 @@ public:
     , m_color(color)
     {}
 
-    void Render();
+    void Render(SDL_Renderer* renderer, const SDL_Rect& rect);
 
 private:
     std::string m_message;
