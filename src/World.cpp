@@ -1,10 +1,10 @@
 #include <antgame/World.h>
 
-void World::AddObject(const std::shared_ptr<WorldObject>& pWorldObject) {
+void World::AddObject(std::shared_ptr<WorldObject> pWorldObject) {
     m_worldTree.InsertObject(pWorldObject);
 }
 
-void World::AddAgent(const std::shared_ptr<Agent>& pAgent) {
+void World::AddAgent(std::shared_ptr<Agent> pAgent) {
     m_agents.push_back(pAgent);
     AddObject(pAgent);
 }

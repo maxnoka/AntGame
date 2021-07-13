@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 
                 antGame.Update();
 
-                std::this_thread::sleep_for(16ms);
+                // std::this_thread::sleep_for(1s);
                 shouldQuit = antGame.ShouldQuit();
             }
             LOG(INFO) << "Quitting";

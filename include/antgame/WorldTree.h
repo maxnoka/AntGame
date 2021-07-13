@@ -20,10 +20,14 @@ struct indexable< std::shared_ptr<T>> {
 
 class WorldTree {
 public:
+    using WorldObjectRTree = boost::geometry::index::rtree< std::shared_ptr<WorldObject>, boost::geometry::index::quadratic<7>>;
+
     WorldTree();
+
+    const WorldObjectRTree& GetRTree() const { return m_rtree; }
     
-    void InsertObject(const std::shared_ptr<WorldObject>& pObj);
-    void RemoveObject(const std::shared_ptr<WorldObject>& pObj);
+    void InsertObject(std::shared_ptr<WorldObject> pObj);
+    void RemoveObject(std::shared_ptr<WorldObject> pObj);
 
     using QueryPredicate = bool (*)(const std::shared_ptr<WorldObject>&);
 
@@ -39,5 +43,5 @@ public:
     std::vector<std::shared_ptr<WorldObject>> GetNearestNeighbours(const Point& point, unsigned int N) const;
     
 private:
-    boost::geometry::index::rtree< std::shared_ptr<WorldObject>, boost::geometry::index::quadratic<16>> m_rtree;
+    WorldObjectRTree m_rtree;
 };
