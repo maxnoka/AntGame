@@ -27,4 +27,10 @@ namespace Keybindings {
             constexpr auto kCode = SDLK_SPACE;
         }
     }
+
+    namespace Debug {
+        namespace ToggleDebug {
+            constexpr auto kCode = SDLK_d;
+        }
+    }
 }

@@ -15,6 +15,7 @@ public:
     WorldObject(const Point& initialPosition, const std::string& name);
     
     std::string Print(bool toLog) const;
+    std::string GetName() const { return m_id; }
     
     /* For registering the World Object as a Point */
     Point GetPosition() const { return m_position; }

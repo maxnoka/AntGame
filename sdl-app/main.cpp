@@ -2,6 +2,7 @@
 
 #include <easyloggingpp/easylogging++.h>
 #include <SDL.h>
+#include <SDL_ttf.h>
 
 #include <iostream>
 #include <thread>
@@ -53,6 +54,8 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    TTF_Init();
+
 #if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
     // Disable compositor bypass
     if(!SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0")) {
@@ -81,7 +84,7 @@ int main(int argc, char* argv[]) {
                 << "SDL_Error: " << SDL_GetError();
         }
         else {
-            Game antGame(kScreenWidth, kScreenHeight);
+            Game antGame(kScreenWidth, kScreenHeight, renderer);
 
             bool shouldQuit = false;
             LOG(INFO) << "Starting game loop";
@@ -93,7 +96,7 @@ int main(int argc, char* argv[]) {
                 // Initialize renderer color white for the background
                 SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
                 SDL_RenderClear(renderer);
-                antGame.Render(renderer);
+                antGame.Render();
                 // Update screen
                 SDL_RenderPresent(renderer);
 

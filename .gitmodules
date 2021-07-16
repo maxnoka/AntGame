@@ -4,3 +4,6 @@
 [submodule "extern/easyloggingpp"]
 	path = extern/easyloggingpp
 	url = https://github.com/maxnoka/easyloggingpp.git
+[submodule "extern/scope-guard"]
+	path = extern/scope-guard
+	url = https://github.com/ricab/scope_guard.git
