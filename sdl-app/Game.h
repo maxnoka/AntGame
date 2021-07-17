@@ -3,7 +3,8 @@
 #include "MessagePassing.h"
 #include "InputHandler.h"
 #include "Camera.h"
-#include "WorldObjectRenderer.h"
+#include "TreeRenderer.h"
+#include "TextRenderer.h"
 
 #include <antgame/World.h>
 
@@ -14,9 +15,9 @@ class Game final
     , public IMessageSubscriber<MiscInput> {
     friend class WorldObjectRenderer;
     friend class TreeRenderer;
+    friend class TextRenderer;
 public:
     Game(int screenWidth, int screenHeight, SDL_Renderer* renderer);
-
 
     virtual void OnMessage(const KeysDict& keysDown) override;
     virtual void OnMessage(const MiscInput& input) override;
@@ -28,10 +29,11 @@ public:
 
 private:
     Camera m_camera;
-    WorldObjectRenderer m_worenderer;
-    SDL_Renderer* m_renderer;
     World m_world;
     InputHandler m_inputHandler;
+    TreeRenderer m_treeRenderer;
+    TextRenderer m_textRenderer;
+    SDL_Renderer* m_renderer;
 
     // Game State
     bool m_runSim;

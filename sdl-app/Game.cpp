@@ -14,11 +14,12 @@ Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer)
     , m_camera(Point(0., 0.), 0, 0., screenWidth, screenHeight)
     , m_world()
     , m_inputHandler()
+    , m_treeRenderer(this)
+    , m_textRenderer(this)
+    , m_renderer(renderer)
     , m_runSim(false)
     , m_debugMode(false)
     , m_shouldQuit(false)
-    , m_renderer(renderer)
-    , m_worenderer(this)
 { 
     m_inputHandler.SubscribeToKeys(&m_camera);
     m_inputHandler.SubscribeToKeys(this);
@@ -80,6 +81,5 @@ void Game::ProcessInput() {
 }
 
 void Game::Render() {
-    TreeRenderer tr(this);
-    tr.Render();
+    m_treeRenderer.Render();
 }

@@ -2,7 +2,6 @@
 
 #include <easyloggingpp/easylogging++.h>
 #include <SDL.h>
-#include <SDL_ttf.h>
 
 #include <iostream>
 #include <thread>
@@ -53,8 +52,6 @@ int main(int argc, char* argv[]) {
             << "SDL_Error: " << SDL_GetError();
         return 0;
     }
-
-    TTF_Init();
 
 #if defined linux && SDL_VERSION_ATLEAST(2, 0, 8)
     // Disable compositor bypass
