@@ -2,7 +2,7 @@
 // TODO I would really like to forward delcare this, but ran into trouble
 // because TTF_Font is defined as 
 // typedef struct _TTF_Font TTF_Font;
-#include <SDL_TTF.h>
+#include <SDL_ttf.h>
 
 #include <string>
 
