@@ -3,7 +3,7 @@ set( SOURCES_LIST
   "Game.cpp"
   "InputHandler.cpp"
   "main.cpp"
-  "Text.cpp"
+  "TextRenderer.cpp"
   "TreeRenderer.cpp"
   "WorldObjectRenderer.cpp"
 )

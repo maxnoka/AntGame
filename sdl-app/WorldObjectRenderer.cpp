@@ -1,7 +1,7 @@
 #include "WorldObjectRenderer.h"
 #include "Camera.h"
 #include "Game.h"
-#include "Text.h"
+#include "TextRenderer.h"
 
 #include <antgame/Ant.h>
 #include <antgame/Plant.h>
@@ -26,10 +26,9 @@ namespace {
         return SDL_FRect { min.x, min.y, (max.x - min.x), (max.y - min.y)};
     }
      
-    void RenderName(const WorldObject& wo, const Camera& cam, SDL_Renderer* renderer) {
+    void RenderName(const WorldObject& wo, const Camera& cam, TextRenderer& textRenderer) {
         static constexpr auto kTextBoxWidth = 100;
         static constexpr auto kTextBoxHeight = 30;
-        static constexpr SDL_Color White = {0xff, 0, 0};
 
         auto point = cam.WorldToScreenTransform(wo.GetPosition());
         SDL_Rect Message_rect;
@@ -38,9 +37,7 @@ namespace {
         Message_rect.w = kTextBoxWidth;
         Message_rect.h = kTextBoxHeight;
 
-        Text debugText(wo.GetName(), White); 
-
-        debugText.Render(renderer, Message_rect);
+        textRenderer.Render(wo.GetName(), Message_rect) ;
     }
 }
 
@@ -48,7 +45,7 @@ void WorldObjectRenderer::Visit(const Ant& visitee) const {
     static constexpr auto kAntSize = 0.5;
 
     if(m_game->m_debugMode) {
-        RenderName(visitee, m_game->m_camera, m_game->m_renderer);
+        RenderName(visitee, m_game->m_camera, m_game->m_textRenderer);
     }
 
     SDL_SetRenderDrawColor(m_game->m_renderer, 0x94, 0x58, 0x0A, 0xFF);
@@ -62,7 +59,7 @@ void WorldObjectRenderer::Visit(const Plant& visitee) const {
     static constexpr auto kFoodSize = 0.2;
 
     if(m_game->m_debugMode) {
-        RenderName(visitee, m_game->m_camera, m_game->m_renderer);
+        RenderName(visitee, m_game->m_camera, m_game->m_textRenderer);
     }
     
     SDL_SetRenderDrawColor(m_game->m_renderer, 0x00, 0xFF, 0x00, 0xFF);
