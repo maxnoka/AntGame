@@ -2,7 +2,6 @@
 #include "Game.h"
 
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <easyloggingpp/easylogging++.h>
 #include <scopeguard/scopeguard.hpp>
 
