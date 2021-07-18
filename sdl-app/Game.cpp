@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Keybindings.h"
 #include "WorldObjectRenderer.h"
+#include "TreeRenderer.h"
 
 #include <antgame/Ant.h>
 #include <antgame/Plant.h>
@@ -24,8 +25,14 @@ Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer)
     m_inputHandler.SubscribeToMiscInput(this);
 
     // Add some ants
-    for ( unsigned int i = 0 ; i < 3 ; ++i ) {
+    for ( unsigned int i = 0 ; i < 20 ; ++i ) {
         Point point(2*i + 0.0f, 2*i + 0.0f);
+        auto newObj = std::make_shared<Ant>(point, "Ant_" + std::to_string(i));
+        m_world.AddAgent(std::move(newObj));
+    }
+
+    for ( unsigned int i = 0 ; i < 20 ; ++i ) {
+        Point point(2*i + 5.0f, 3*i + 7.0f);
         auto newObj = std::make_shared<Ant>(point, "Ant_" + std::to_string(i));
         m_world.AddAgent(std::move(newObj));
     }
@@ -72,11 +79,7 @@ void Game::ProcessInput() {
     m_inputHandler.HandleInput();
 }
 
-void Game::Render() const {
-    auto frustrum = m_camera.GetFrustrum();
-    auto [objectsIt, objectsItEnd] = m_world.GetObjects(frustrum);
-
-    for (; objectsIt != objectsItEnd; objectsIt++) {
-        (*objectsIt)->Accept(m_worenderer);
-    }
+void Game::Render() {
+    TreeRenderer tr(this);
+    tr.Render();
 }

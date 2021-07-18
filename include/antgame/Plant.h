@@ -13,7 +13,7 @@ public:
     , m_nutritionalValue(nutritionalValue)
     {}
 
-    virtual void Accept(const Visitor& visitor) override final { visitor.Visit(*this); }
+    virtual void Accept(const Visitor& visitor) const override final { visitor.Visit(*this); } 
 
 private:
     int m_nutritionalValue;

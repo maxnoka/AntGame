@@ -1,3 +1,5 @@
+#pragma once
+
 #include "MessagePassing.h"
 #include "InputHandler.h"
 #include "Camera.h"
@@ -11,6 +13,7 @@ class Game final
     : public IMessageSubscriber<KeysDict>
     , public IMessageSubscriber<MiscInput> {
     friend class WorldObjectRenderer;
+    friend class TreeRenderer;
 public:
     Game(int screenWidth, int screenHeight, SDL_Renderer* renderer);
 
@@ -19,7 +22,7 @@ public:
     virtual void OnMessage(const MiscInput& input) override;
 
     void ProcessInput();
-    void Render() const;
+    void Render();
     void Update() { if(m_runSim) m_world.Update(); }
     bool ShouldQuit() { return m_shouldQuit; }
 

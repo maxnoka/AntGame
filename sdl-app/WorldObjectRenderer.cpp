@@ -71,3 +71,17 @@ void WorldObjectRenderer::Visit(const Plant& visitee) const {
     auto rect = BoxToFRectTransform(expanded, m_game->m_camera);
     SDL_RenderFillRectF(m_game->m_renderer, &rect);
 } 
+
+void WorldObjectRenderer::Visit(const WorldObject& visitee) const {
+    static constexpr auto kSize = 0.3;
+    SDL_SetRenderDrawColor(m_game->m_renderer, 0x00, 0x00, 0xFF, 0xFF);
+    const auto expanded = ExpandPointToRect(visitee.GetPosition(), kSize);
+    const auto rect = BoxToFRectTransform(expanded, m_game->m_camera);
+    SDL_RenderFillRectF(m_game->m_renderer, &rect);
+}
+
+void WorldObjectRenderer::Visit(const Box& visitee) const {
+    SDL_SetRenderDrawColor(m_game->m_renderer, 0xEE, 0x00, 0x00, 0xFF);
+    const auto rect = BoxToFRectTransform(visitee, m_game->m_camera);
+    SDL_RenderDrawRectF(m_game->m_renderer, &rect);
+}

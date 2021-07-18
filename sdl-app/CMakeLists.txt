@@ -4,6 +4,7 @@ set( SOURCES_LIST
   "InputHandler.cpp"
   "main.cpp"
   "Text.cpp"
+  "TreeRenderer.cpp"
   "WorldObjectRenderer.cpp"
 )
 

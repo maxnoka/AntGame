@@ -4,5 +4,5 @@
 
 class Visitee {
 public:
-    virtual void Accept(const Visitor& visitor) = 0;
+    virtual void Accept(const Visitor& visitor) const = 0;
 };

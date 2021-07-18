@@ -9,8 +9,10 @@ class World {
 public:
     World() = default;
     
-    void AddObject(const std::shared_ptr<WorldObject>& pWorldObject);
-    void AddAgent(const std::shared_ptr<Agent>& pAgent);
+    void AddObject(std::shared_ptr<WorldObject> pWorldObject);
+    void AddAgent(std::shared_ptr<Agent> pAgent);
+
+    WorldTree& GetWorldTree() { return m_worldTree; }
 
     /*
     void RemoveObject(const std::shared_ptr<WorldObject>& pObj); 
