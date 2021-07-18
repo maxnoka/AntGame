@@ -32,7 +32,6 @@ TextRenderer::~TextRenderer() {
     if (m_font) {
         TTF_CloseFont(m_font);
     }
-
     TTF_Quit();
 }
 
@@ -43,17 +42,12 @@ void TextRenderer::Render(const std::string& message, const SDL_Rect& rect) {
     }
 
     SDL_Surface* surface = TTF_RenderText_Solid(m_font, message.data(), red);
-    // now you can convert it into a texture
     if (!surface) {
         LOG(ERROR) << "No surface. Cannot render text";
         return;
     }
     auto destroySurface = sg::make_scope_guard(
-        [surface](){
-            if (surface) {
-                SDL_FreeSurface(surface);
-            }
-        }
+         [surface](){ if (surface) { SDL_FreeSurface(surface); } }
     );
 
     SDL_Texture* texture = SDL_CreateTextureFromSurface(m_game->m_renderer, surface);
@@ -62,11 +56,7 @@ void TextRenderer::Render(const std::string& message, const SDL_Rect& rect) {
         return;
     }
     auto destroyTexture = sg::make_scope_guard(
-        [texture](){
-            if (texture) {
-                SDL_DestroyTexture(texture);
-            }
-        }
+        [texture](){ if (texture) { SDL_DestroyTexture(texture); } }
     );
 
     SDL_RenderCopy(m_game->m_renderer, texture, NULL, &rect);
