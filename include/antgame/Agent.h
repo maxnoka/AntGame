@@ -12,4 +12,5 @@ public:
     {}
 
 	virtual void Update(const WorldTree& world) = 0;
+    virtual void RemoveSelfFromWorld() override;
 };

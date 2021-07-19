@@ -24,7 +24,7 @@ public:
 
     void ProcessInput();
     void Render();
-    void Update() { if(m_runSim) m_world.Update(); }
+    void Update();
     bool ShouldQuit() { return m_shouldQuit; }
 
 private:

@@ -4,7 +4,7 @@
 #include "TreeRenderer.h"
 
 #include <antgame/Ant.h>
-#include <antgame/Plant.h>
+#include <antgame/FoodSource.h>
 
 #include <easyloggingpp/easylogging++.h>
 
@@ -26,30 +26,36 @@ Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer)
     m_inputHandler.SubscribeToMiscInput(this);
 
     // Add some ants
-    for ( unsigned int i = 0 ; i < 20 ; ++i ) {
+    for ( unsigned int i = 0 ; i < 1; ++i ) {
         Point point(2*i + 0.0f, 2*i + 0.0f);
         auto newObj = std::make_shared<Ant>(point, "Ant_" + std::to_string(i));
-        m_world.AddAgent(std::move(newObj));
+        m_world.QueueAddAgent(std::move(newObj));
     }
 
     for ( unsigned int i = 0 ; i < 20 ; ++i ) {
         Point point(2*i + 5.0f, 3*i + 7.0f);
         auto newObj = std::make_shared<Ant>(point, "Ant_" + std::to_string(i));
-        m_world.AddAgent(std::move(newObj));
+        m_world.QueueAddAgent(std::move(newObj));
     }
 
-    {
-        Point point(7, 3);
-        auto newObj = std::make_shared<Ant>(point, "Ant_6");
-        m_world.AddAgent(std::move(newObj));
-    }
+    // Add a food source
+    Point point(5.f, 5.f);
+    auto source = std::make_shared<FoodSource>(point, "Source_1", 0.1, 10);
+    m_world.QueueAddAgent(std::move(source));
 
-    // Add some food
-    for ( unsigned int i = 5 ; i < 10 ; ++i ) {
-        Point point(i + 0.0f, 2.0f);
-        auto newObj = std::make_shared<Plant>(point, "Plant_" + std::to_string(i), 5);
-        m_world.AddObject(std::move(newObj));
+    // Add a food source
+    Point point2(25.f, 5.f);
+    auto source2 = std::make_shared<FoodSource>(point2, "Source_2", 0.1, 5);
+    m_world.QueueAddAgent(std::move(source2));
+
+    m_world.FlushQueues();
+}
+
+void Game::Update() {
+    if(!m_runSim) {
+        return;
     }
+    m_world.Update(); 
 }
 
 void Game::OnMessage(const KeysDict& keysDown) {

@@ -4,7 +4,7 @@
 #include "TextRenderer.h"
 
 #include <antgame/Ant.h>
-#include <antgame/Plant.h>
+#include <antgame/Food.h>
 
 #include <SDL.h>
 
@@ -42,7 +42,10 @@ namespace {
 }
 
 void WorldObjectRenderer::Visit(const Ant& visitee) const {
-    static constexpr auto kAntSize = 0.5;
+    static constexpr auto kAntSizeScaler = 200.f;
+
+    const auto energy = visitee.GetEnergy();
+    const auto size = energy / kAntSizeScaler;
 
     if(m_game->m_debugMode) {
         RenderName(visitee, m_game->m_camera, m_game->m_textRenderer);
@@ -50,12 +53,12 @@ void WorldObjectRenderer::Visit(const Ant& visitee) const {
 
     SDL_SetRenderDrawColor(m_game->m_renderer, 0x94, 0x58, 0x0A, 0xFF);
 
-    auto expanded = ExpandPointToRect(visitee.GetPosition(), kAntSize);
+    auto expanded = ExpandPointToRect(visitee.GetPosition(), size);
     auto rect = BoxToFRectTransform(expanded, m_game->m_camera);
     SDL_RenderFillRectF(m_game->m_renderer, &rect);
 }
 
-void WorldObjectRenderer::Visit(const Plant& visitee) const {
+void WorldObjectRenderer::Visit(const Food& visitee) const {
     static constexpr auto kFoodSize = 0.2;
 
     if(m_game->m_debugMode) {
