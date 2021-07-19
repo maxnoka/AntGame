@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 
-class WorldTree;
+class World;
 
 class WorldObject
  : public Visitee
@@ -17,7 +17,7 @@ public:
     std::string Print(bool toLog) const;
     std::string GetName() const { return m_id; }
 
-    void AttachTo(WorldTree* wt) { m_worldTree = wt; }
+    void AttachTo(World* w) { m_world = w; }
     
     /* For registering the World Object as a Point */
     Point GetPosition() const { return m_position; }
@@ -27,10 +27,12 @@ public:
     void SetPosY(float y);
 
 protected:
+    virtual void RemoveSelfFromWorld();
+
     Point m_position;
+    World* m_world;
 private:
     std::string m_id;
-    WorldTree* m_worldTree;
 };
 
 BOOST_GEOMETRY_REGISTER_POINT_2D_GET_SET(

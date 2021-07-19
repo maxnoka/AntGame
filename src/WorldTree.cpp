@@ -12,12 +12,10 @@ std::vector<std::shared_ptr<WorldObject>> WorldTree::GetNearestNeighbours(const 
 }
 
 void WorldTree::InsertObject(std::shared_ptr<WorldObject> pObj) {
-    pObj->AttachTo(this);
     m_rtree.insert(pObj);
 }
 
 void WorldTree::RemoveObject(std::shared_ptr<WorldObject> pObj) {
-    pObj->AttachTo(nullptr);
     m_rtree.remove(pObj);
 }
 

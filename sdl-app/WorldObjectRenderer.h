@@ -11,7 +11,7 @@ public:
     {}
 
     virtual void Visit(const Ant& visitee) const override final;
-    virtual void Visit(const Plant& visitee) const override final;
+    virtual void Visit(const Food& visitee) const override final;
     virtual void Visit(const WorldObject& visitee) const override final;
     virtual void Visit(const Box& visitee) const override final;
 
