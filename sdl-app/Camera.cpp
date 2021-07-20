@@ -69,8 +69,8 @@ SDL_FPoint Camera::WorldToScreenTransform(const Point& point) const {
     auto z = Expzoom(m_zoom);
 
     SDL_FPoint ret { 
-        (r11*d_x+r21*d_y)*z, 
-        (r12*d_x+r22*d_y)*z 
+        (r11*d_x+r21*d_y)*z + m_windowWidth/2, 
+        (r12*d_x+r22*d_y)*z + m_windowHeight/2
     };
 
     return ret;
@@ -87,15 +87,18 @@ Point Camera::ScreenToWorldTransform(const SDL_FPoint& p) const {
     auto r21 = s;
     auto r22 = c;
 
-    auto d_x = r11*p.x+r12*p.y;
-    auto d_y = r21*p.x+r22*p.y;
+    auto d_x = r11*(p.x - m_windowWidth/2) + r12*(p.y - m_windowHeight/2);
+    auto d_y = r21*(p.x - m_windowWidth/2) + r22*(p.y - m_windowHeight/2);
     
     auto z = Expzoom(m_zoom);
     return {d_x/z + o_x, d_y/z + o_y};
 }
 
 void Camera::UpdateFrustrum() {
-    auto p1 = ScreenToWorldTransform({0, 0});
+    auto p1 = ScreenToWorldTransform({
+        static_cast<float>(0),
+        static_cast<float>(0)});
+
 
     auto p2 = ScreenToWorldTransform({
         static_cast<float>(m_windowWidth),
