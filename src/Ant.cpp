@@ -2,11 +2,14 @@
 #include <antgame/Food.h>
 #include <antgame/World.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <easyloggingpp/easylogging++.h>
 
 #include <boost/geometry.hpp>
 
+
+#define PI 3.14159265
 namespace {
 
 float RandFloat(float lo, float hi) {
@@ -14,13 +17,33 @@ float RandFloat(float lo, float hi) {
 }
 
 static constexpr auto kStartingEnergy = 100;
+auto kStartingDirection = RandFloat(-180, 180);
 
 }
 
 Ant::Ant(const Point& initialPosition, const std::string& name)
 : Agent(initialPosition, name)
+, m_direction(kStartingDirection)
 , m_energy(kStartingEnergy)
 { }
+
+void Ant::Turn(float Angle) { //updates direction of Ant
+	m_direction += Angle;
+
+	// if (m_direction < -180){
+	// 	m_direction += 360;
+	// }
+	// else if (m_direction > 180) {
+	// 	m_direction -= 360;
+	// }
+}
+
+void Ant::Move(float turningAngle, float distanceForward) {
+	Ant::Turn(turningAngle);
+	//printf("%f\n", m_direction);
+	this->SetPosX(this->GetPosX() + (distanceForward * cos(m_direction*PI/180))); //move forward in new direction
+	this->SetPosY(this->GetPosY() + (distanceForward * sin(m_direction*PI/180)));
+}
 
 void Ant::Eat(Food& food) {
 	AddEnergy(food.GetNutritionalValue());
@@ -32,6 +55,8 @@ void Ant::Update(const WorldTree& world) {
 	static constexpr auto kEatingDistance = 0.2;
 	static constexpr auto kDivideEnergy = 200;
 	static constexpr auto kEnergyDrain = 0.1;
+	static constexpr auto kMaxTurnAngle = 30;
+	static constexpr auto kSpeed = 0.01; //ant speed
 
 	AddEnergy(-kEnergyDrain);
 
@@ -56,22 +81,40 @@ void Ant::Update(const WorldTree& world) {
 	// This is just demo activity.
 	// TODO: ant brain
 	if (typeid(Food) == typeid(*nearestObject.get())) {
-		static constexpr auto kSpeed = 0.01;
-		auto direction = this->GetPosition();
-		boost::geometry::subtract_point(direction, nearestObject->GetPosition());
-		auto distance = boost::geometry::strategy::distance::pythagoras().apply(m_position, nearestObject->GetPosition());
-		boost::geometry::divide_value(direction, -distance);
+		
+		auto direction = this->GetPosition(); //gets ants current position
+		boost::geometry::subtract_point(direction, nearestObject->GetPosition()); //p1 - p2 = p21 a vector from the food to the ant
+		auto distance = boost::geometry::strategy::distance::pythagoras().apply(m_position, nearestObject->GetPosition()); // distance to food
+		boost::geometry::divide_value(direction, -distance); //normalises and  flips the vector to point from ant to food
+
+		float angleToTurn;
+
+		if (direction.get<0>() >= 0) {
+			angleToTurn = (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+		}
+		else if (direction.get<1>() >= 0){
+			angleToTurn = 180 - (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+		}
+		else {
+			angleToTurn = -180 + (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+		}
+
+		if (angleToTurn > kMaxTurnAngle) {
+			angleToTurn = kMaxTurnAngle;
+		}
+		else if (angleToTurn < -kMaxTurnAngle) {
+			angleToTurn = -kMaxTurnAngle;
+		}
 
 		if (distance < kEatingDistance) {
 			Eat(*dynamic_cast<Food*>(nearestObject.get()));
 		}
 		else {
-			this->SetPosX(this->GetPosX() + direction.get<0>() * kSpeed);
-			this->SetPosY(this->GetPosY() + direction.get<1>() * kSpeed);
+			Ant::Move(angleToTurn, kSpeed);
 		}
 
 	}
-
-	this->SetPosX(this->GetPosX() + RandFloat(-kDriftDelta, kDriftDelta));
-	this->SetPosY(this->GetPosY() + RandFloat(-kDriftDelta, kDriftDelta));
+	else {
+		Ant::Move(RandFloat(-kMaxTurnAngle, kMaxTurnAngle), kSpeed);
+	}
 }

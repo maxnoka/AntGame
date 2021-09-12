@@ -11,13 +11,17 @@ public:
 	
 	void Update(const WorldTree& world) override;
 	void Eat(Food& food);
+	void Move(float direction, float distance);
 
 	float GetEnergy() const { return m_energy; }
+	float GetDirection() const { return m_direction; }
 
     virtual void Accept(const Visitor& visitor) const override final { visitor.Visit(*this); }
 
 private:
 	void AddEnergy(float energy) { m_energy += energy; };
+	void Turn(float Angle);
 
+	float m_direction;
 	float m_energy;
 };

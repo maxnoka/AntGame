@@ -1,6 +1,8 @@
 #pragma once
 #include <SDL.h>
 
+// Add here to add new keybinds>???
+
 namespace Keybindings {
     namespace Navigation {
         namespace Left {
