@@ -14,13 +14,28 @@ float RandFloat(float lo, float hi) {
 }
 
 static constexpr auto kStartingEnergy = 100;
+static constexpr auto kDivideEnergy = 200;
 
 }
 
 Ant::Ant(const Point& initialPosition, const std::string& name)
 : Agent(initialPosition, name)
-, m_energy(kStartingEnergy)
-{ }
+, m_startingEnergy(kStartingEnergy, 10)
+, m_speed(0.1, 0.01)
+, m_energy(m_startingEnergy.GetVal())
+{ 
+}
+
+Ant::Ant(const Point& initialPosition, const std::string& name, const HeritableTrait& startingSpeed, const HeritableTrait& startingEnergy)
+: Agent(initialPosition, name)
+, m_startingEnergy(startingEnergy)
+, m_speed(startingSpeed)
+, m_energy(m_startingEnergy.GetVal())
+{
+	if (m_energy >= kDivideEnergy) {
+		m_energy = kDivideEnergy - 1;
+	}
+}
 
 void Ant::Eat(Food& food) {
 	AddEnergy(food.GetNutritionalValue());
@@ -30,7 +45,6 @@ void Ant::Eat(Food& food) {
 void Ant::Update(const WorldTree& world) {
 	static constexpr auto kDriftDelta = 0.05;
 	static constexpr auto kEatingDistance = 0.2;
-	static constexpr auto kDivideEnergy = 200;
 	static constexpr auto kEnergyDrain = 0.1;
 
 	AddEnergy(-kEnergyDrain);
@@ -42,9 +56,9 @@ void Ant::Update(const WorldTree& world) {
 	}
 
 	if (m_energy > kDivideEnergy) {
-        auto child1 = std::make_shared<Ant>(m_position, GetName() + "_1");
+        auto child1 = std::make_shared<Ant>(m_position, GetName() + "_1", m_speed.Mutate(), m_startingEnergy.Mutate());
         m_world->QueueAddAgent(std::move(child1));
-        auto child2 = std::make_shared<Ant>(m_position, GetName() + "_2");
+        auto child2 = std::make_shared<Ant>(m_position, GetName() + "_2", m_speed.Mutate(), m_startingEnergy.Mutate());
         m_world->QueueAddAgent(std::move(child2));
 
 		RemoveSelfFromWorld();
