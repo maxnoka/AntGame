@@ -1,7 +1,8 @@
 #pragma once
 #include <SDL.h>
 
-// Add here to add new keybinds>???
+// Add new SDL keybindings here and add to InputHandler, as well as 
+// whoever consumes the input (see e.g. Camera::OnMessage)
 
 namespace Keybindings {
     namespace Navigation {

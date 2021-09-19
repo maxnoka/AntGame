@@ -1,29 +1,30 @@
 #include <antgame/Ant.h>
 #include <antgame/Food.h>
 #include <antgame/World.h>
-#include <stdlib.h>
-#include <math.h>
 
 #include <easyloggingpp/easylogging++.h>
 
+#include <boost/math/constants/constants.hpp>
 #include <boost/geometry.hpp>
 
+#include <math.h>
+#include <stdlib.h>
 
-#define PI 3.14159265
 namespace {
+	float RandFloat(float lo, float hi) {
+		return lo + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(hi - lo)));
+	}
 
-float RandFloat(float lo, float hi) {
-	return lo + static_cast <float> (rand()) /( static_cast <float> (RAND_MAX/(hi - lo)));
-}
+	inline float DegreesToRadians(float degrees) {
+		return degrees * boost::math::constants::pi<double>() / 180;
+	}
 
-static constexpr auto kStartingEnergy = 100;
-auto kStartingDirection = RandFloat(-180, 180);
-
+	static constexpr auto kStartingEnergy = 100;
 }
 
 Ant::Ant(const Point& initialPosition, const std::string& name)
 : Agent(initialPosition, name)
-, m_direction(kStartingDirection)
+, m_direction(RandFloat(-180, 180))
 , m_energy(kStartingEnergy)
 { }
 
@@ -40,9 +41,8 @@ void Ant::Turn(float Angle) { //updates direction of Ant
 
 void Ant::Move(float turningAngle, float distanceForward) {
 	Ant::Turn(turningAngle);
-	//printf("%f\n", m_direction);
-	this->SetPosX(this->GetPosX() + (distanceForward * cos(m_direction*PI/180))); //move forward in new direction
-	this->SetPosY(this->GetPosY() + (distanceForward * sin(m_direction*PI/180)));
+	this->SetPosX(this->GetPosX() + (distanceForward * cos(DegreesToRadians(m_direction)))); //move forward in new direction
+	this->SetPosY(this->GetPosY() + (distanceForward * sin(DegreesToRadians(m_direction))));
 }
 
 void Ant::Eat(Food& food) {
@@ -89,18 +89,16 @@ void Ant::Update(const WorldTree& world) {
 
 		if(distance < kVisionDistance) { //if you see food but it's too far away you don't see it sike
 			boost::geometry::divide_value(direction, -distance); //normalises and  flips the vector to point from ant to food
-
 			
 			float angleToTurn;
-
 			if (direction.get<0>() >= 0) {
-				angleToTurn = (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+				angleToTurn = DegreesToRadians(atan(direction.get<1>()/direction.get<0>())) - m_direction;
 			}
 			else if (direction.get<1>() >= 0){
-				angleToTurn = 180 - (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+				angleToTurn = 180 - DegreesToRadians(atan(direction.get<1>()/direction.get<0>())) - m_direction;
 			}
 			else {
-				angleToTurn = -180 + (atan(direction.get<1>()/direction.get<0>())*180/PI) - m_direction;
+				angleToTurn = -180 + DegreesToRadians(atan(direction.get<1>()/direction.get<0>())) - m_direction;
 			}
 
 			if (angleToTurn > kMaxTurnAngle) {
