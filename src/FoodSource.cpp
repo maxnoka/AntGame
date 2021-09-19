@@ -15,11 +15,10 @@ void FoodSource::Update(const WorldTree& world) {
     static constexpr auto kMaxFood = 500;
 
     int numberOfFood = m_poissonDist(generator);
-    m_numFood += numberOfFood;
-
     if (m_numFood > kMaxFood) {
         return;
     }
+    m_numFood += numberOfFood;
 
     for (size_t i = 0; i < numberOfFood; ++i) {
         auto x = m_uniformDistX(generator);

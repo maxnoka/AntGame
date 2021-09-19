@@ -40,13 +40,8 @@ Game::Game(int screenWidth, int screenHeight, SDL_Renderer* renderer)
 
     // Add a food source
     Point point(5.f, 5.f);
-    auto source = std::make_shared<FoodSource>(point, "Source_1", 0.1, 10);
+    auto source = std::make_shared<FoodSource>(point, "Source_1", 6, 23);
     m_world.QueueAddAgent(std::move(source));
-
-    // Add a food source
-    Point point2(25.f, 5.f);
-    auto source2 = std::make_shared<FoodSource>(point2, "Source_2", 0.1, 5);
-    m_world.QueueAddAgent(std::move(source2));
 
     m_world.FlushQueues();
 }
