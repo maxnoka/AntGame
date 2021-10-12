@@ -7,6 +7,7 @@
 #include <antgame/Food.h>
 
 #include <SDL.h>
+#include <SDL2_gfxPrimitives.h>
 
 #include <easyloggingpp/easylogging++.h>
 
@@ -18,6 +19,13 @@ namespace {
         auto max_y = point.get<1>() + size / 2;
         return Box({min_x, min_y}, {max_x, max_y});
     }
+
+    // Point ExpandPointToTriangle(const Point& point, float size) {
+    //     auto a_y = point.get<1>() + 2 *size/3;
+    //     auto a_x = point.get<0>();
+
+    //     // auto b_x = point.get<0>
+    // }
 
     SDL_FRect BoxToFRectTransform(const Box& box, const Camera& cam) {
         auto min = cam.WorldToScreenTransform(box.min_corner());

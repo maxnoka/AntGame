@@ -21,5 +21,6 @@ target_link_libraries(sdl_app PRIVATE antgame_library)
 #####################################
 find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-target_link_libraries(sdl_app PRIVATE SDL2::Main SDL2::TTF)
+find_package(SDL2_gfx REQUIRED)
+target_link_libraries(sdl_app PRIVATE SDL2::Main SDL2::TTF SDL2::GFX)
 target_link_libraries(sdl_app PRIVATE scopeguard) 
